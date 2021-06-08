@@ -1,0 +1,63 @@
+" All system-wide defaults are set in $VIMRUNTIME/archlinux.vim (usually just
+" /usr/share/vim/vimfiles/archlinux.vim) and sourced by the call to :runtime
+" you can find below.  If you wish to change any of those settings, you should
+" do it in this file (/etc/vimrc), since archlinux.vim will be overwritten
+" everytime an upgrade of the vim packages is performed.  It is recommended to
+" make changes after sourcing archlinux.vim since it alters the value of the
+" 'compatible' option.
+
+" This line should not be removed as it ensures that various options are
+" properly set to work with the Vim-related packages.
+runtime! archlinux.vim
+
+" If you prefer the old-style vim functionalty, add 'runtime! vimrc_example.vim'
+" Or better yet, read /usr/share/vim/vim80/vimrc_example.vim or the vim manual
+" and configure vim to your own liking!
+
+" do not load defaults if ~/.vimrc is missing
+"let skip_defaults_vim=1
+" BEGIN ANSIBLE
+" show existing tab with 4 spaces width
+set tabstop=2
+" when indenting with '>', use 2 spaces width
+set shiftwidth=2
+" On pressing tab, insert 2 spaces
+set expandtab
+set number
+set wildmenu
+set wildmode=full
+set hlsearch
+
+" share VIM clipboard with the OS
+set clipboard^=unnamedplus
+
+if has("autocmd")
+  filetype on
+  filetype indent on
+  filetype plugin on
+endif
+
+syntax on
+
+colorscheme desert
+
+" easy buffer switching
+nnoremap <silent> [b :bprevious<CR>
+nnoremap <silent> ]b :bnext<CR>
+nnoremap <silent> [B :bfirst<CR>
+nnoremap <silent> ]B :blast<CR>
+nnoremap <silent> <leader>q :bp <BAR> bd #<CR>
+
+" enable mouse interaction
+set mouse=a
+" when putting %% in command-line prompt, insert current dir
+cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
+" Allow saving of files as sudo
+cmap w!! w !sudo tee % > /dev/null
+" Toggle paste with F5
+set pastetoggle=<f5>
+" CTRL-L disables temporarily highlight search
+nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
+" some black magic with vim diff - prolly looking better and faster
+set diffopt=filler,internal,algorithm:histogram,indent-heuristic
+" END ANSIBLE
